@@ -59,6 +59,10 @@
 void pia_init(void)
 {
 	uart_init(BAUD);
+	
+	uart_puts("Apple Computer 1");
+	uart_puts("Copyright 1976");
+	uart_puts("");
 	uart_putc('!');
 	iox_init();
 	
