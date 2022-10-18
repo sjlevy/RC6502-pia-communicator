@@ -54,6 +54,8 @@
 #define KBD_INTERRUPT_ENABLE 1
 #define KBD_SEND_TIMEOUT 23
 
+#define RUBOUT_CLASSIC 0 // 1 to enable classic Rubout character (_) instead of modern backspace
+
 void pia_init(void)
 {
 	uart_init(BAUD);
@@ -70,6 +72,10 @@ void pia_init(void)
 
 char map_to_ascii(int c) {
 	if (c == 203) c = 27; // convert ESC key
+	if(c == 8) { // convert Backspace to Rubout
+		c = 95;
+		if(!RUBOUT_CLASSIC) uart_putc('\b'); // back up cursor position
+	}
 	if (c > 576 && c < 603) c -= 576; // Ctrl A-Z
 	if (c > 96 && c < 123) c -= 32; // convert lowercase keys to UPPERCASE
 	
@@ -115,13 +121,19 @@ void serial_receive() {
 
 char send_ascii(char c) {
 	switch (c) {
+		case '_': // backspace encountered
+			if(!RUBOUT_CLASSIC) {
+				uart_putc(' '); // print blank instead to clear last character
+				uart_putc('\b'); // back up cursor position
+			} else uart_putc(c);
+			break;
 		case '\r': uart_putc('\n'); // replace CR with LF
 		default:
 			uart_putc(c);
 	}
 }
 
-void serial_transmit() {	
+void serial_transmit() {
 	VIDEO_RDA_HI;
 	_delay_us(1);
 	
