@@ -6,6 +6,12 @@ This firmware is usually able to accept 40-column hex input at full speed, but i
 
 This code is compiled with the provided Makefile using avr-libc and avr-gcc and flashed using avrdude. The Arduino IDE is not used.
 
+# Uploading hex file with avrdude
+Replace COM9 with your serial port number:
+```
+avrdude -pm328p -carduino -PCOM9 -Uflash:w:"pia.hex":i
+```
+
 # Credits
 
 forked from J.B. Langston's [jblang/pia_communicator](https://github.com/jblang/pia_communicator)
