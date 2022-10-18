@@ -27,35 +27,30 @@
 #include "iox.h"
 #include "spi.h"
 
-void iox_init(void)
-{
-    spi_init();
+void iox_init(void) {
+	spi_init();
 }
 
-void iox_begin(uint8_t mode, uint8_t addr)
-{
-    SPI_PORT &= ~(1 << SS);
-    spi_exchange(SPI_ADDR | mode);
-    spi_exchange(addr);
+void iox_begin(uint8_t mode, uint8_t addr) {
+	SPI_PORT &= ~(1 << SS);
+	spi_exchange(SPI_ADDR | mode);
+	spi_exchange(addr);
 }
 
-void iox_end(void)
-{
-    SPI_PORT |= (1 << SS);
+void iox_end(void) {
+	SPI_PORT |= (1 << SS);
 }
 
-uint8_t iox_read(uint8_t chipaddr, uint8_t regaddr)
-{
-    uint8_t data;
-    iox_begin(READ | (chipaddr << 1), regaddr);
-    data = spi_exchange(0);
-    iox_end();
-    return data;
+uint8_t iox_read(uint8_t chipaddr, uint8_t regaddr) {
+	uint8_t data;
+	iox_begin(READ | (chipaddr << 1), regaddr);
+	data = spi_exchange(0);
+	iox_end();
+	return data;
 }
 
-void iox_write(uint8_t chipaddr, uint8_t regaddr, uint8_t data)
-{
-    iox_begin(WRITE | (chipaddr << 1), regaddr);
-    spi_exchange(data);
-    iox_end();
+void iox_write(uint8_t chipaddr, uint8_t regaddr, uint8_t data) {
+	iox_begin(WRITE | (chipaddr << 1), regaddr);
+	spi_exchange(data);
+	iox_end();
 }
