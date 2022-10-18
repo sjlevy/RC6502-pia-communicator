@@ -8,8 +8,10 @@ This code is compiled with the provided Makefile using avr-libc and avr-gcc and 
 
 # Credits
 
+forked from J.B. Langston's [jblang/pia_communicator](https://github.com/jblang/pia_communicator)
+
 pia.c is based on the original [RC6502](https://github.com/tebl/RC6502-Apple-1-Replica) pia_communicator.ino sketch by tebl, and released under the GPLv3 license.
 
 uart.h and uart.c come from the [FatFs](http://elm-chan.org/fsw/ff/00index_e.html) AVR example project. Copyright (C) 2016 ChaN.
 
-The iox.h, iox.c, spi.h, and spi.c come from my own [z80ctrl](https://github.com/jblang/z80ctrl) project.
+The iox.h, iox.c, spi.h, and spi.c come from [jblang/z80ctrl](https://github.com/jblang/z80ctrl)
